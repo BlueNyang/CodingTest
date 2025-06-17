@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cstdio> // C-Style IO (fread, fwrite) 사용을 위한 header
 #include <cctype> // 문자 분류 함수 (isdigit, isspace)
 #include <type_traits> // type 특성 (is_integral_v, is_floating_point_v)
