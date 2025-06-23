@@ -1,20 +1,29 @@
 #include <string>
-#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-constexpr int BIT_LENGTH = 10;
+// binary의 최대 길이
+constexpr int MAX_LEN = 10;
 
 string ulltos(unsigned long long n) {
+    // n이 0이면 "0"
     if (n == 0) return "0";
     
-    string bin = "";
+    string bin;
+    // 2진수 덧셈 결과의 길이는 최대길이 + 1 이하
+    // 미리 공간을 할당하여 메모리 재할당 최소화
+    bin.reserve(MAX_LEN + 1);
     
     // 2로 나누면서 binary로 변환
     while (n > 0) {
-        bin = to_string(n % 2) + bin;
+        // push_back을 하더라도 메모리 재할당이 없음
+        bin.push_back((n % 2 == 0) ? '0' : '1');
         n /= 2;
     }
+    
+    // reverse
+    reverse(bin.begin(), bin.end());
     
     return bin;
 }
