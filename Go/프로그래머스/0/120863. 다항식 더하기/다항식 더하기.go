@@ -3,41 +3,57 @@ import (
     "strconv"
 )
 
-func solution(polynomial string) string {
-    tokens := strings.Fields(polynomial)
-    var x1, c int
-    
-    for _, token := range tokens {
-        if token == "+" {
-            continue
-        }
-        
-        if token == "x" {
-            x1++
-        } else if token[len(token)-1] == 'x' {
-            num, _ := strconv.Atoi(token[:len(token)-1])
-            x1 += num
-        } else {
-            num, _ := strconv.Atoi(token)
-            c += num
-        }
-    }
-    
+type Polynomial struct {
+    x, c int
+}
+
+func (p *Polynomial) ToString() string {
     res := strings.Builder{}
     
-    if x1 == 1 {
-        res.WriteString("x")
-    } else if x1 > 0 {
-        res.WriteString(strconv.Itoa(x1))
+    if p.x > 1 {
+        res.WriteString(strconv.Itoa(p.x))
+    }
+    
+    if p.x != 0 {
         res.WriteString("x")
     }
     
-    if c != 0 {
-        if x1 > 0 {
-            res.WriteString(" + ")
-        }
-        res.WriteString(strconv.Itoa(c))
+    if p.x != 0 && p.c != 0 {
+        res.WriteString(" + ")
+    }
+    
+    if p.c != 0 {
+        res.WriteString(strconv.Itoa(p.c))
     }
     
     return res.String()
+}
+
+func (p *Polynomial) getFromString(s string) {
+    if s == "x" {
+        p.x++
+    } else if s[len(s)-1] == 'x' {
+        n := string(s[:len(s)-1])
+        p.x += StoInt(n)
+    } else {
+        p.c += StoInt(s)
+    }
+}
+
+func StoInt(s string) int {
+    if num, err := strconv.Atoi(s); err == nil {
+        return num
+    }
+    return 0
+}
+
+func solution(polynomial string) string {
+    tokens := strings.Split(polynomial, " + ")
+    poly := Polynomial {}
+    
+    for _, token := range tokens {
+        poly.getFromString(token)
+    }
+    
+    return poly.ToString()
 }
