@@ -1,6 +1,7 @@
 func solution(my_string string) int {
     var res, temp int
     
+    my_string += "a"
     for _, r := range my_string {
         if r >= '0' && r <= '9' {
             temp *= 10
@@ -9,10 +10,6 @@ func solution(my_string string) int {
             res += temp
             temp = 0
         }
-    }
-    
-    if temp != 0 {
-        res += temp
     }
     
     return res
