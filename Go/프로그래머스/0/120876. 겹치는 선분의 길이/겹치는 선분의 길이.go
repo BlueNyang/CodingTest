@@ -1,9 +1,9 @@
 func solution(lines [][]int) int {
-    line_map := make(map[int]int)
+    line_map := make([]int, 200)
     
     for _, l := range lines {
         for i := l[0]; i < l[1]; i++ {
-            line_map[i]++
+            line_map[i+100]++
         }
     }
     
